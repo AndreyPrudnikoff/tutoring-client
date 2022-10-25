@@ -1,0 +1,27 @@
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 375px;
+  margin: 0 auto;
+
+  p {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin: 5px;
+    color: #858282;
+    input:not([type=checkbox]) {
+      width: 175px;
+      padding: 4px;
+      border-radius: 4px;
+    }
+
+    button {
+      width: 175px;
+      padding: 4px;
+      border-radius: 4px;
+    }
+  }
+}
