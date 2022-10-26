@@ -1,4 +1,5 @@
 <main>
+  <button class="switcher" (click)="changeTemplate()">{{mode}}</button>
   <form *ngIf="isLogin; else elseBlock" [formGroup]="form" (submit)="login()" class="form-field">
     <p>
       <label for="email">Your email</label>
@@ -36,7 +37,6 @@
       </p>
     </form>
   </ng-template>
-
-  <button (click)="changeTemplate()">Switch</button>
+  <button (click)="lessons()">lessons</button>
 </main>
 
