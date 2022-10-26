@@ -1,45 +1,35 @@
 <main>
-  <form *ngIf="isLogin; else elseBlock" [formGroup]="form" (submit)="submit()" class="form-field">
+  <form *ngIf="isLogin; else elseBlock" [formGroup]="form" (submit)="login()" class="form-field">
     <p>
-      <label for="name">Your name</label>
-      <input formControlName="name" type="text" name="" id="name">
+      <label for="email">Your email</label>
+      <input formControlName="email" type="text" id="email">
     </p>
     <p>
       <label for="password">Your password</label>
-      <input formControlName="password" type="password" name="" id="password">
+      <input formControlName="password" type="password" id="password">
+    </p>
+    <p>
+      <label for="role">
+        <input formControlName="role" type="checkbox" id="role">
+        <span>I'm tutor</span>
+      </label>
     </p>
     <p>
       <button type="submit" [disabled]="!form.valid">Submit</button>
     </p>
   </form>
   <ng-template #elseBlock>
-    <form [formGroup]="form" (submit)="submit()" class="form-field">
-      <p>
-        <label for="first_name">Your first name</label>
-        <input formControlName="first_name" type="text" name="" id="first_name">
+    <form [formGroup]="form" (submit)="register()" class="form-field">
+      <p *ngFor="let input of formFields">
+        <label [for]="input.field">{{input.text}}</label>
+        <input [formControlName]="input.field" [type]="input.type" [id]="input.field">
       </p>
-      <p>
-        <label for="last_name">Your last name</label>
-        <input formControlName="last_name" type="text" name="" id="last_name">
-      </p>
-      <p>
-        <label for="phone">Your phone</label>
-        <input formControlName="phone" type="text" name="" id="phone">
-      </p>
-      <p>
-        <label for="email">Your email</label>
-        <input formControlName="email" type="text" name="" id="email">
-      </p>
-      <p>
-        <label for="reg_password">Your password</label>
-        <input formControlName="reg_password" type="password" name="" id="reg_password">
-      </p>
+
       <p>
         <label for="role">
-          <input formControlName="role" type="checkbox" name="" id="role">
+          <input formControlName="role" type="checkbox" id="role">
           <span>I'm tutor</span>
         </label>
-
       </p>
       <p>
         <button type="submit" [disabled]="!form.valid">Submit</button>

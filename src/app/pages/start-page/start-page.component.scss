@@ -24,4 +24,8 @@
       border-radius: 4px;
     }
   }
+  .reverse {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
 }
