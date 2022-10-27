@@ -1,8 +1,4 @@
-import { Injectable } from '@angular/core'
-import { HttpClient } from "@angular/common/http"
-import {Observable} from "rxjs"
-
-type Method = 'login' | 'register'
+import {Injectable} from '@angular/core'
 
 @Injectable({
   providedIn: 'root'
@@ -10,15 +6,19 @@ type Method = 'login' | 'register'
 export class ApiService {
 
   baseUrl = 'http://localhost:3000/api'
-  token = '';
-  constructor(private http: HttpClient) {
+  token = sessionStorage.getItem('token') || '';
 
+  constructor() {
   }
 
-  operation(method: Method, body: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/${method}`, body)
-  }
-  basicOperation(method: string, body: any): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${method}`, body)
+  saveLoginResponse(response: any) {
+    if (response && response.token) {
+      try {
+        sessionStorage.setItem('token', response.token);
+        this.token = response.token;
+      } catch (e) {
+        console.error(e)
+      }
+    }
   }
 }

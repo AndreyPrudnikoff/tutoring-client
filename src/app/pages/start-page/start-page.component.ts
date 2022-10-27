@@ -1,7 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthService} from "../../services/auth.service";
 import {ApiService} from "../../services/api.service";
+import {FlowService} from "../../services/flow.service";
 import {LoginResponse} from "../../types/api";
+import {Router} from "@angular/router";
 
 const formFields = [
   {
@@ -43,19 +46,24 @@ export class StartPageComponent implements OnInit {
     role: false
   })
 
+  constructor(private fb: FormBuilder,
+              private auth: AuthService,
+              private api: ApiService,
+              private flow: FlowService,
+              private router: Router) {
+  }
+
   register() {
-    this.api.operation('register', this.form.value)
+    this.auth.register(this.form.value)
       .subscribe(console.log)
   }
-  lessons() {
-    this.api.basicOperation('lessons', this.form.value)
-      .subscribe(console.log)
-  }
+
   login() {
-    this.api.operation('login', this.form.value)
+    this.auth.login(this.form.value)
       .subscribe((response: LoginResponse) => {
         if (response.success) {
-          this.api.token = response.token || '';
+          this.api.saveLoginResponse(response);
+          this.router.navigate(['schedule']);
         }
       })
   }
@@ -82,12 +90,6 @@ export class StartPageComponent implements OnInit {
     }
   }
 
-  log() {
-    console.log(this.form.get('role')?.value)
-  }
-
-  constructor(private fb: FormBuilder, private api: ApiService) {
-  }
 
   ngOnInit(): void {
   }
