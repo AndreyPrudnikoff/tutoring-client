@@ -10,12 +10,6 @@
       <input formControlName="password" type="password" id="password">
     </p>
     <p>
-      <label for="role">
-        <input formControlName="role" type="checkbox" id="role">
-        <span>I'm tutor</span>
-      </label>
-    </p>
-    <p>
       <button type="submit" [disabled]="!form.valid">Submit</button>
     </p>
   </form>
@@ -27,10 +21,11 @@
       </p>
 
       <p>
-        <label for="role">
-          <input formControlName="role" type="checkbox" id="role">
-          <span>I'm tutor</span>
-        </label>
+        <select formControlName="user_role">
+          <option *ngFor="let user_role of roles" [ngValue]="user_role">
+            {{ user_role }}
+          </option>
+        </select>
       </p>
       <p>
         <button type="submit" [disabled]="!form.valid">Submit</button>

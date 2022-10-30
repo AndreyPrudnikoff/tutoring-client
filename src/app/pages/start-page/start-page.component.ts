@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {ApiService} from "../../services/api.service";
-import {FlowService} from "../../services/flow.service";
 import {LoginResponse} from "../../types/api";
 import {Router} from "@angular/router";
+import {StateService} from "../../services/state.service";
 
 const formFields = [
   {
@@ -40,30 +40,31 @@ export class StartPageComponent implements OnInit {
   isLogin = true;
   formFields = formFields;
   mode = 'Registration';
+  roles = ['tutor', 'student'];
   form: FormGroup = this.fb.group({
     email: ['', Validators.required],
-    password: ['', Validators.required],
-    role: false
+    password: ['', Validators.required]
   })
 
   constructor(private fb: FormBuilder,
               private auth: AuthService,
               private api: ApiService,
-              private flow: FlowService,
+              private state: StateService,
               private router: Router) {
   }
 
   register() {
     this.auth.register(this.form.value)
-      .subscribe(console.log)
+      .subscribe(() => this.changeTemplate())
   }
 
   login() {
     this.auth.login(this.form.value)
-      .subscribe((response: LoginResponse) => {
+      .subscribe(async (response: LoginResponse) => {
         if (response.success) {
+          this.state.user = response.data;
           this.api.saveLoginResponse(response);
-          this.router.navigate(['schedule']);
+          await this.router.navigate(['schedule']);
         }
       })
   }
@@ -74,8 +75,7 @@ export class StartPageComponent implements OnInit {
       this.mode = 'Registration';
       this.form = this.fb.group({
         email: ['', Validators.required],
-        password: ['', Validators.required],
-        role: false
+        password: ['', Validators.required]
       })
     } else {
       this.mode = 'Login';
@@ -84,7 +84,7 @@ export class StartPageComponent implements OnInit {
         last_name: ['', Validators.required],
         phone: ['', Validators.required],
         email: ['', Validators.required],
-        role: false,
+        user_role: this.roles[0],
         reg_password: ['', Validators.required]
       })
     }

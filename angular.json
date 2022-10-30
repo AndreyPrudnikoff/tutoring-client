@@ -29,8 +29,7 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/ngx-spinner/animations/timer.css",
-              "node_modules/angular-calendar/css/angular-calendar.css"
+              "node_modules/ngx-spinner/animations/timer.css"
             ],
             "scripts": []
           },
@@ -99,8 +98,7 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/ngx-spinner/animations/timer.css",
-              "node_modules/angular-calendar/css/angular-calendar.css"
+              "node_modules/ngx-spinner/animations/timer.css"
             ],
             "scripts": []
           }
