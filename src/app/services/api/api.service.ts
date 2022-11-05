@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core'
-import {StateService} from "./state.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +11,12 @@ export class ApiService {
   constructor() {
   }
 
-  saveLoginResponse(response: any) {
+  saveLoginResponse(response: any, role: string) {
     if (response && response.token) {
       try {
         sessionStorage.setItem('token', response.token);
+        sessionStorage.setItem('user', JSON.stringify(response.data));
+        sessionStorage.setItem('user_role', role.toString());
         this.token = response.token;
       } catch (e) {
         console.error(e)

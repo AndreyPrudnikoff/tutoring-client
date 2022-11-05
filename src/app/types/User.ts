@@ -4,5 +4,4 @@ export interface User {
   last_name: string
   phone: string
   user_id: string
-  user_role: string
 }

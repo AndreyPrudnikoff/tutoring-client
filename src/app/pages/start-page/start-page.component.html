@@ -10,6 +10,13 @@
       <input formControlName="password" type="password" id="password">
     </p>
     <p>
+    <select formControlName="user_role">
+      <option *ngFor="let user_role of roles" [ngValue]="user_role">
+        {{ user_role }}
+      </option>
+    </select>
+  </p>
+    <p>
       <button type="submit" [disabled]="!form.valid">Submit</button>
     </p>
   </form>
@@ -27,6 +34,7 @@
           </option>
         </select>
       </p>
+
       <p>
         <button type="submit" [disabled]="!form.valid">Submit</button>
       </p>

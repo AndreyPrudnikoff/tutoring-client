@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../services/auth.service";
-import {ApiService} from "../../services/api.service";
+import {AuthService} from "../../services/api/auth.service";
+import {ApiService} from "../../services/api/api.service";
 import {LoginResponse} from "../../types/api";
 import {Router} from "@angular/router";
 import {StateService} from "../../services/state.service";
@@ -43,7 +43,8 @@ export class StartPageComponent implements OnInit {
   roles = ['tutor', 'student'];
   form: FormGroup = this.fb.group({
     email: ['', Validators.required],
-    password: ['', Validators.required]
+    password: ['', Validators.required],
+    user_role: this.roles[0]
   })
 
   constructor(private fb: FormBuilder,
@@ -55,7 +56,10 @@ export class StartPageComponent implements OnInit {
 
   register() {
     this.auth.register(this.form.value)
-      .subscribe(() => this.changeTemplate())
+      .subscribe(
+        () => this.changeTemplate(),
+        (error) => console.log(error)
+      );
   }
 
   login() {
@@ -63,10 +67,11 @@ export class StartPageComponent implements OnInit {
       .subscribe(async (response: LoginResponse) => {
         if (response.success) {
           this.state.user = response.data;
-          this.api.saveLoginResponse(response);
+          this.state.user_role = this.form.value.user_role;
+          this.api.saveLoginResponse(response, this.form.value.user_role);
           await this.router.navigate(['schedule']);
         }
-      })
+      });
   }
 
   changeTemplate() {
@@ -75,7 +80,8 @@ export class StartPageComponent implements OnInit {
       this.mode = 'Registration';
       this.form = this.fb.group({
         email: ['', Validators.required],
-        password: ['', Validators.required]
+        password: ['', Validators.required],
+        user_role: this.roles[0]
       })
     } else {
       this.mode = 'Login';

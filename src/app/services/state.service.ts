@@ -7,6 +7,7 @@ import {User} from "../types/User";
 export class StateService {
 
   lessons = [];
-  user: User;
+  user: User | null = JSON.parse(sessionStorage.getItem('user')) || null;
+  user_role: string = sessionStorage.getItem('user_role') || ''
   constructor() { }
 }
