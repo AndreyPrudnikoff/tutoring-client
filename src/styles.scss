@@ -2,3 +2,12 @@
 /* angular-cli file: src/styles.css */
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+* {
+  box-sizing: border-box;
+}
+.tooltip-inner {
+  background-color: #000;
+  color: #FFF;
+  padding: 2px 4px;
+  border-radius: 4px;
+}

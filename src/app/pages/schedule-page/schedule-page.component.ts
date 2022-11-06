@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {QueryService} from "../../services/api/query.service";
 import {StateService} from "../../services/state.service";
+import {CalendarService} from "../../services/calendar.service";
 
 
 @Component({
@@ -11,25 +12,34 @@ import {StateService} from "../../services/state.service";
 
 export class SchedulePageComponent {
 
-  constructor(private query: QueryService, public state: StateService) {
-
+  constructor(
+    private query: QueryService,
+    public state: StateService,
+    public calendar: CalendarService) {
+    this.getLessons();
   }
 
   getLessons() {
     this.query.getLessons(this.state.user_role + '_id',
       '=',
       this.state.user.user_id,
-    ).subscribe(lessons => this.state.lessons = lessons.data)
+    ).subscribe(lessons => {
+      this.state.lessons = lessons.data;
+      this.state.lessonsRender = this.calendar.monthWithLessons(this.calendar.currentMonthDays, this.state.lessons);
+      console.log(this.state.lessonsRender)
+    })
   }
 
   createLessons() {
     const lesson = {
-      start_time: '2022-11-11 16:00:00',
-      end_time: '2022-11-11 17:00:00',
+      start_time: '2022-11-11 11:00:00',
+      end_time: '2022-11-11 12:00:00',
       status_lesson: 'expected',
-      comment: 'whohoho',
+      comment: 'Whahaha',
+      subject_id: 'a1accafe-5d32-11ed-9b6a-0242ac120002',
       tutor_id: '51da6ca0-0768-4070-875e-6593ed448bb6',
-      student_id: this.state.user.user_id,
+      student_id: '600607f4-7bf9-4802-b284-c203dd8eb389'
+
     }
     this.query.createLesson(lesson)
       .subscribe(response => {

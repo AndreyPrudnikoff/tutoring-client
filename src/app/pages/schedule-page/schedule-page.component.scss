@@ -1,0 +1,33 @@
+.month {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+
+  .day-of-month {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    border: 1px solid #CCC;
+    min-height: 80px;
+    flex: 1;
+    font-family: Calibri, sans-serif;
+    font-size: 14px;
+
+    .lessons-container {
+      display: flex;
+    }
+
+    &.current-day {
+      background-color: #a09ed9;
+    }
+
+    .day {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: .5;
+      margin: 10px 10px 10px auto;
+    }
+
+  }
+}
+

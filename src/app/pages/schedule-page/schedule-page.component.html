@@ -1,4 +1,11 @@
-<div>Schedule</div>
-<button (click)="getLessons()">CLICK</button>
-<button (click)="createLessons()">CREATE</button>
-<div *ngFor="let lesson of state.lessons">{{lesson | json}}</div>
+<div class="month">
+  <div class="day-of-month" [class.current-day]="day.date === calendar.currentDate" *ngFor="let day; of state.lessonsRender">
+    <div class="day">{{day.date}}</div>
+    <div class="lessons-container">
+      <div *ngFor="let lesson of day.lesson">
+        <app-day-of-month [lesson]="lesson"></app-day-of-month>
+      </div>
+    </div>
+  </div>
+</div>
+

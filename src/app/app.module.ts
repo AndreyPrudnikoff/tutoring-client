@@ -10,8 +10,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HeadersService} from "./interceptors/headers.service";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {SpinnerService} from "./interceptors/spinner.service";
-import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModalModule, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
 import {CommonModule} from "@angular/common";
+import { DayOfMonthComponent } from './components/day-of-month/day-of-month.component';
+import { TimeFormatterPipe } from './pipes/time-formatter.pipe';
 
 
 @NgModule({
@@ -25,11 +27,14 @@ import {CommonModule} from "@angular/common";
     ReactiveFormsModule,
     NgxSpinnerModule,
     FormsModule,
+    NgbTooltipModule,
   ],
   declarations: [
     AppComponent,
     StartPageComponent,
     SchedulePageComponent,
+    DayOfMonthComponent,
+    TimeFormatterPipe,
   ],
 
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
