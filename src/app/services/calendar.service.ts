@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {StateService} from "./state.service";
 import {Lesson} from "../types/Lesson";
 
 @Injectable({
@@ -15,16 +14,24 @@ export class CalendarService {
   currentYear = this.dateNow.getFullYear();
   currentMonthDays = new Array(this.daysInMonth(this.currentMonth, this.currentYear)).fill(0);
 
+
   constructor() {
-    console.log()
   }
 
   daysInMonth(month: number, year) {
     return new Date(year, month + 1, 0).getDate();
   }
 
+  getFirstDay() {
+    return new Date(this.currentYear, this.currentMonth, 1).getDay();
+  }
+
+  getLastDay() {
+    return new Date(this.currentYear, this.currentMonth, this.currentMonthDays.length).getDay();
+  }
+
   monthWithLessons(currentMonthDays: any[], lessons: Lesson[]) {
-    return this.currentMonthDays.map((el, index) => {
+    const merge = (el, index) => {
       const date: any = {date: index + 1, lesson: []}
       lessons.forEach(lesson => {
         const lessonDate = new Date(lesson.start_time).getDate()
@@ -33,6 +40,15 @@ export class CalendarService {
         }
       })
       return date;
+    }
+    const begin = () => new Array(this.getFirstDay() - 1)
+    const finish = () => this.getLastDay() ? new Array(7 - this.getLastDay()) : []
+    return [...begin(), ...this.currentMonthDays.map(merge), ...finish()].map((el) => {
+      if (!el) {
+        return {date: '', lessons: []}
+      } else {
+        return el
+      }
     })
   }
 }

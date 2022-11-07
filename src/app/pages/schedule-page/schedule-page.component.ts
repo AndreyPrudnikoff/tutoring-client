@@ -20,14 +20,11 @@ export class SchedulePageComponent {
   }
 
   getLessons() {
-    this.query.getLessons(this.state.user_role + '_id',
-      '=',
-      this.state.user.user_id,
-    ).subscribe(lessons => {
-      this.state.lessons = lessons.data;
-      this.state.lessonsRender = this.calendar.monthWithLessons(this.calendar.currentMonthDays, this.state.lessons);
-      console.log(this.state.lessonsRender)
-    })
+    this.query.getLessons(this.state.user_role + '_id', '=', this.state.user.user_id).subscribe(
+      lessons => {
+        this.state.lessons = lessons.data;
+        this.state.lessonsRender = this.calendar.monthWithLessons(this.calendar.currentMonthDays, this.state.lessons);
+      })
   }
 
   createLessons() {

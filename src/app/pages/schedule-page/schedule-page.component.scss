@@ -2,6 +2,16 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 
+  .day-of-week {
+    padding: 4px;
+    text-align: center;
+    font-family: Calibri, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+
+  }
+
   .day-of-month {
     display: flex;
     flex-direction: column;
@@ -9,16 +19,20 @@
 
     border: 1px solid #CCC;
     min-height: 80px;
-    flex: 1;
     font-family: Calibri, sans-serif;
     font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, .3);
+    }
 
     .lessons-container {
       display: flex;
     }
 
     &.current-day {
-      background-color: #a09ed9;
+      background-color: rgba(182, 255, 229, 0.98);
     }
 
     .day {
@@ -28,6 +42,15 @@
       margin: 10px 10px 10px auto;
     }
 
+  }
+
+  .disabled {
+    background-color: rgba(204, 204, 204, 0.3);
+    cursor: auto;
+
+    &:hover {
+      box-shadow: none;
+    }
   }
 }
 
