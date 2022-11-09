@@ -1,3 +1,4 @@
+<app-view-switcher></app-view-switcher>
 <div class="month">
   <div class="day-of-week" *ngFor="let head of state.days">{{head}}</div>
   <div class="day-of-month" [class.disabled]="!day.date" [class.current-day]="day.date === calendar.currentDate" *ngFor="let day of state.lessonsRender">

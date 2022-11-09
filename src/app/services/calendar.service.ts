@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Lesson} from "../types/Lesson";
+import {BehaviorSubject} from "rxjs";
+import {StateService} from "./state.service";
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +10,21 @@ export class CalendarService {
 
   options: any = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
   locale = window.navigator.language;
-  dateNow = new Date(Date.now());
-  currentDate = this.dateNow.getDate();
-  currentMonth = this.dateNow.getMonth();
-  currentYear = this.dateNow.getFullYear();
+  dateNow = new BehaviorSubject(new Date(Date.now()));
+  currentDate = new Date(Date.now()).getDate();
+  currentMonth = this.dateNow.value.getMonth();
+  currentYear = this.dateNow.value.getFullYear();
   currentMonthDays = new Array(this.daysInMonth(this.currentMonth, this.currentYear)).fill(0);
 
 
-  constructor() {
+  constructor(private state: StateService) {
+    this.dateNow.subscribe(() => {
+      this.currentDate = this.dateNow.value.getDate();
+      this.currentMonth = this.dateNow.value.getMonth();
+      this.currentYear = this.dateNow.value.getFullYear();
+      this.currentMonthDays = new Array(this.daysInMonth(this.currentMonth, this.currentYear)).fill(0);
+      this.state.lessonsRender = this.monthWithLessons(this.currentMonthDays, this.state.lessons);
+    })
   }
 
   daysInMonth(month: number, year) {
