@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core'
 })
 export class ApiService {
 
-  baseUrl = 'http://localhost:3000/api'
+  baseUrl = 'https://tutoring.fly.dev/api'
   token = sessionStorage.getItem('token') || '';
 
   constructor() {
