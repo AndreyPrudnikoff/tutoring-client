@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core'
-
+import config from '../../../assets/variables'
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  baseUrl = 'https://tutoring.fly.dev/api'
+  baseUrl = config.baseUrl
   token = sessionStorage.getItem('token') || '';
 
   constructor() {
