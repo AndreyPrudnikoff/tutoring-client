@@ -3,3 +3,6 @@
   <button (click)="setMonth('current')" class="sw-btn">Current</button>
   <button (click)="setMonth('next')" class="sw-btn">Next</button>
 </div>
+<div>
+  {{calendar.viewDate.value.toLocaleDateString()}}
+</div>

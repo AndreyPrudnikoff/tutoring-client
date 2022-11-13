@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Lesson} from "../types/Lesson";
 import {BehaviorSubject} from "rxjs";
 import {StateService} from "./state.service";
+import { QueryService } from "./api/query.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,20 +11,32 @@ export class CalendarService {
 
   options: any = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
   locale = window.navigator.language;
-  dateNow = new BehaviorSubject(new Date(Date.now()));
+  viewDate = new BehaviorSubject(new Date(Date.now()));
   currentDate = new Date(Date.now()).getDate();
-  currentMonth = this.dateNow.value.getMonth();
-  currentYear = this.dateNow.value.getFullYear();
+  currentMonth = this.viewDate.value.getMonth();
+  currentYear = this.viewDate.value.getFullYear();
   currentMonthDays = new Array(this.daysInMonth(this.currentMonth, this.currentYear)).fill(0);
 
 
-  constructor(private state: StateService) {
-    this.dateNow.subscribe(() => {
-      this.currentDate = this.dateNow.value.getDate();
-      this.currentMonth = this.dateNow.value.getMonth();
-      this.currentYear = this.dateNow.value.getFullYear();
+  constructor(private state: StateService, private query: QueryService) {
+    this.viewDate.subscribe(() => {
+      this.currentDate = this.viewDate.value.getDate();
+      this.currentMonth = this.viewDate.value.getMonth();
+      this.currentYear = this.viewDate.value.getFullYear();
       this.currentMonthDays = new Array(this.daysInMonth(this.currentMonth, this.currentYear)).fill(0);
-      this.state.lessonsRender = this.monthWithLessons(this.currentMonthDays, this.state.lessons);
+      this.query.getLessonsRangeTime(
+          'start_time',
+          'more',
+          `${this.currentYear}-${this.currentMonth + 1}-01`,
+          'AND',
+          'end_time',
+          'less',
+          `${this.currentYear}-${this.currentMonth + 1}-${this.currentMonthDays.length}`)
+        .subscribe((response) => {
+          this.state.lessons = response.data;
+          this.state.lessonsRender = this.monthWithLessons(this.currentMonthDays, this.state.lessons);
+        })
+
     })
   }
 
@@ -50,12 +63,16 @@ export class CalendarService {
       })
       return date;
     }
-    const begin = () => new Array(this.getFirstDay() - 1)
+    const begin = () => {
+      const data = this.getFirstDay() - 1 >= 0 ? this.getFirstDay() - 1 : 0;
+      return new Array(data);
+    }
     const finish = () => this.getLastDay() ? new Array(7 - this.getLastDay()) : []
     return [...begin(), ...this.currentMonthDays.map(merge), ...finish()].map((el) => {
       if (!el) {
         return {date: '', lessons: []}
       } else {
+        console.log(el)
         return el
       }
     })

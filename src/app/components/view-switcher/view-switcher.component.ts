@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {CalendarService} from "../../services/calendar.service";
+import { Component, OnInit } from '@angular/core';
+import { CalendarService } from "../../services/calendar.service";
 
 type SwitchNavigation = 'prev' | 'current' | 'next';
 
@@ -10,7 +10,7 @@ type SwitchNavigation = 'prev' | 'current' | 'next';
 })
 export class ViewSwitcherComponent implements OnInit {
 
-  constructor(private calendar: CalendarService) {
+  constructor(public calendar: CalendarService) {
   }
 
   ngOnInit(): void {
@@ -24,19 +24,27 @@ export class ViewSwitcherComponent implements OnInit {
     }
     switch (value) {
       case "current":
-        this.calendar.dateNow.next(new Date(time.year, time.month, time.date));
+        this.calendar.viewDate.next(new Date(time.year, time.month, time.date));
         break
       case "next":
-        time.month++;
-        this.calendar.dateNow.next(new Date(time.year, time.month, time.date));
+        this.calendar.viewDate
+          .next(new Date(
+            this.calendar.viewDate.value.getFullYear(),
+            this.calendar.viewDate.value.getMonth() < 11 ? this.calendar.viewDate.value.getMonth() + 1 : 0,
+            this.calendar.viewDate.value.getDate())
+          );
         break
       case "prev":
-        time.month--;
-        this.calendar.dateNow.next(new Date(new Date(time.year, time.month, time.date)));
+        this.calendar.viewDate
+          .next(
+            new Date(new Date(this.calendar.viewDate.value.getFullYear(),
+              this.calendar.viewDate.value.getMonth() > 0 ? this.calendar.viewDate.value.getMonth() - 1 : 11,
+              this.calendar.viewDate.value.getDate())));
         break
       default:
-        this.calendar.dateNow.next(new Date(Date.now()));
+        this.calendar.viewDate.next(new Date(Date.now()));
         break;
     }
   }
 }
+
