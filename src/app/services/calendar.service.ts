@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {Lesson} from "../types/Lesson";
-import {BehaviorSubject} from "rxjs";
-import {StateService} from "./state.service";
+import { Injectable } from '@angular/core';
+import { Lesson } from "../types/Lesson";
+import { BehaviorSubject } from "rxjs";
+import { StateService } from "./state.service";
 import { QueryService } from "./api/query.service";
 
 @Injectable({
@@ -24,19 +24,24 @@ export class CalendarService {
       this.currentMonth = this.viewDate.value.getMonth();
       this.currentYear = this.viewDate.value.getFullYear();
       this.currentMonthDays = new Array(this.daysInMonth(this.currentMonth, this.currentYear)).fill(0);
-      this.query.getLessonsRangeTime(
-          'start_time',
-          'more',
-          `${this.currentYear}-${this.currentMonth + 1}-01`,
-          'AND',
-          'end_time',
-          'less',
-          `${this.currentYear}-${this.currentMonth + 1}-${this.currentMonthDays.length}`)
+      this.getLessons()
         .subscribe((response) => {
           this.state.lessons = response.data;
           this.state.lessonsRender = this.monthWithLessons(this.currentMonthDays, this.state.lessons);
         })
 
+    })
+  }
+
+  getLessons() {
+    return this.query.getLessons({
+      data: {
+        user_id: this.state.user.user_id,
+        time_range: {
+          more: `${this.currentYear}-${this.currentMonth + 1}-01`,
+          less: `${this.currentYear}-${this.currentMonth + 1}-${this.currentMonthDays.length}`
+        }
+      }, method: 'get'
     })
   }
 

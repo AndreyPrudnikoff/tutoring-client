@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {ApiService} from "./api.service";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import { LessonRequestBody } from "../../types/api";
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,10 @@ export class QueryService extends ApiService{
     super();
   }
 
-  getLessons(key: string, condition: string, value: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/lessons/${key}/${condition}/${value}`)
+  getLessons({method = 'get', data}: LessonRequestBody): Observable<any> {
+    return this.http.post('${this.baseUrl}/lessons/', {method, data})
   }
-  getLessonsRangeTime(key: string, condition: string, value: string, extraCondition: string, key2: string, condition2: string, value2: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/lessons/${key}/${condition}/${value}/${extraCondition}/${key2}/${condition2}/${value2}`)
-  }
-  createLesson(body: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/lessons`, body)
+  createLesson({method = 'create', data}: LessonRequestBody): Observable<any> {
+    return this.http.post('${this.baseUrl}/lessons', {method, data})
   }
 }
