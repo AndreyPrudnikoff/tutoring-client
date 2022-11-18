@@ -37,6 +37,7 @@ export class CalendarService {
     return this.query.getLessons({
       data: {
         user_id: this.state.user.user_id,
+        role: this.state.user_role,
         time_range: {
           more: `${this.currentYear}-${this.currentMonth + 1}-01`,
           less: `${this.currentYear}-${this.currentMonth + 1}-${this.currentMonthDays.length}`

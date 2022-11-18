@@ -14,9 +14,9 @@ export class QueryService extends ApiService{
   }
 
   getLessons({method = 'get', data}: LessonRequestBody): Observable<any> {
-    return this.http.post('${this.baseUrl}/lessons/', {method, data})
+    return this.http.post(`${this.baseUrl}/lessons/`, {method, data})
   }
   createLesson({method = 'create', data}: LessonRequestBody): Observable<any> {
-    return this.http.post('${this.baseUrl}/lessons', {method, data})
+    return this.http.post(`${this.baseUrl}/lessons`, {method, data})
   }
 }

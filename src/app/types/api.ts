@@ -6,6 +6,7 @@ export type LoginResponse = {
 }
 export type QueryLessons = {
   user_id: string
+  role: string
   time_range?: {
     less?: string
     more?: string
