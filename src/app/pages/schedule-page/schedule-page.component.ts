@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {StateService} from "../../services/state.service";
 import {CalendarService} from "../../services/calendar.service";
 import {formatDate} from "@angular/common";
+import {Store} from "@ngrx/store";
+import {getLessonsAction} from "../../store/actions/lessons.action";
 
 
 @Component({
@@ -14,16 +16,18 @@ export class SchedulePageComponent {
 
   constructor(
     public state: StateService,
+    private store: Store,
     public calendar: CalendarService) {
     this.getLessons();
   }
 
   getLessons() {
-    this.calendar.getLessons().subscribe(
-      lessons => {
-        this.state.lessons = lessons.data;
-        this.state.lessonsRender = this.calendar.monthWithLessons(this.calendar.currentMonthDays, this.state.lessons);
-      })
+    this.store.dispatch(getLessonsAction());
+    // this.calendar.getLessons().subscribe(
+    //   lessons => {
+    //     this.state.lessons = lessons.data;
+    //     this.state.lessonsRender = this.calendar.monthWithLessons(this.calendar.currentMonthDays, this.state.lessons);
+    //   })
   }
 
   // createLessons() {

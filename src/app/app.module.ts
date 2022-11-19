@@ -14,6 +14,12 @@ import {NgbModalModule, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
 import {CommonModule} from "@angular/common";
 import { DayOfMonthComponent } from './components/day-of-month/day-of-month.component';
 import { ViewSwitcherComponent } from './components/view-switcher/view-switcher.component';
+import {StoreModule} from "@ngrx/store";
+import {EffectsModule} from "@ngrx/effects";
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import {environment} from "../environments/environment";
+import {lessonsReducers} from "./store/reducers/lessons.reducer";
+import {LessonsEffects} from "./store/effects/lessons.effects";
 
 
 @NgModule({
@@ -28,6 +34,13 @@ import { ViewSwitcherComponent } from './components/view-switcher/view-switcher.
     NgxSpinnerModule,
     FormsModule,
     NgbTooltipModule,
+    StoreModule.forRoot({schedule: lessonsReducers}),
+    EffectsModule.forRoot([LessonsEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+    }),
   ],
   declarations: [
     AppComponent,

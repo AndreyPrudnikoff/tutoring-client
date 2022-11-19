@@ -36,11 +36,6 @@ const formFields = [
   styleUrls: ['./start-page.component.scss']
 })
 export class StartPageComponent implements OnInit {
-log() {
-  for (const control in this.form.controls) {
-    console.log(this.form.controls?.[control]?.errors)
-  }
-}
   isLogin = true;
   formFields = formFields;
   mode = 'Registration';

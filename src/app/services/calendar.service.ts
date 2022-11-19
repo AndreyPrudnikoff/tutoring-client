@@ -1,8 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Lesson } from "../types/Lesson";
-import { BehaviorSubject } from "rxjs";
-import { StateService } from "./state.service";
-import { QueryService } from "./api/query.service";
+import {Injectable} from '@angular/core';
+import {Lesson} from "../types/Lesson";
+import {BehaviorSubject} from "rxjs";
+import {StateService} from "./state.service";
+import {QueryService} from "./api/query.service";
+import {Store, select} from "@ngrx/store";
+import {selectLessons} from "../store/selectors/lessons.selector";
+import {getLessonsAction} from "../store/actions/lessons.action";
 
 @Injectable({
   providedIn: 'root'
@@ -18,18 +21,20 @@ export class CalendarService {
   currentMonthDays = new Array(this.daysInMonth(this.currentMonth, this.currentYear)).fill(0);
 
 
-  constructor(private state: StateService, private query: QueryService) {
+  constructor(private state: StateService, private query: QueryService, private store: Store) {
+    this.store.pipe(select(selectLessons))
+      .subscribe(lessons => {
+        if (lessons) {
+          this.state.lessons = lessons;
+          this.state.lessonsRender = this.monthWithLessons(this.currentMonthDays, this.state.lessons);
+        }
+      })
     this.viewDate.subscribe((value) => {
       this.currentDate = value.getDate();
       this.currentMonth = value.getMonth();
       this.currentYear = value.getFullYear();
       this.currentMonthDays = new Array(this.daysInMonth(this.currentMonth, this.currentYear)).fill(0);
-      this.getLessons()
-        .subscribe((response) => {
-          this.state.lessons = response.data;
-          this.state.lessonsRender = this.monthWithLessons(this.currentMonthDays, this.state.lessons);
-        })
-
+      this.store.dispatch(getLessonsAction());
     })
   }
 
