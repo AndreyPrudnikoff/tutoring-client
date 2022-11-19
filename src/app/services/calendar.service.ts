@@ -19,10 +19,10 @@ export class CalendarService {
 
 
   constructor(private state: StateService, private query: QueryService) {
-    this.viewDate.subscribe(() => {
-      this.currentDate = this.viewDate.value.getDate();
-      this.currentMonth = this.viewDate.value.getMonth();
-      this.currentYear = this.viewDate.value.getFullYear();
+    this.viewDate.subscribe((value) => {
+      this.currentDate = value.getDate();
+      this.currentMonth = value.getMonth();
+      this.currentYear = value.getFullYear();
       this.currentMonthDays = new Array(this.daysInMonth(this.currentMonth, this.currentYear)).fill(0);
       this.getLessons()
         .subscribe((response) => {
@@ -60,10 +60,10 @@ export class CalendarService {
 
   monthWithLessons(currentMonthDays: any[], lessons: Lesson[]) {
     const merge = (el, index) => {
-      const date: any = {date: index + 1, lesson: []}
+      const date: any = {date: this.viewDate.value.setDate(index + 1), lesson: []}
       lessons.forEach(lesson => {
         const lessonDate = new Date(lesson.start_time).getDate()
-        if (date.date === lessonDate) {
+        if (new Date(date.date).getDate() === lessonDate) {
           date.lesson.push(lesson);
         }
       })
@@ -78,7 +78,6 @@ export class CalendarService {
       if (!el) {
         return {date: '', lessons: []}
       } else {
-        console.log(el)
         return el
       }
     })

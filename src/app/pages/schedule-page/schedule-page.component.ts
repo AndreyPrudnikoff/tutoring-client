@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { QueryService } from "../../services/api/query.service";
-import { StateService } from "../../services/state.service";
-import { CalendarService } from "../../services/calendar.service";
+import {Component} from '@angular/core';
+import {StateService} from "../../services/state.service";
+import {CalendarService} from "../../services/calendar.service";
+import {formatDate} from "@angular/common";
 
 
 @Component({
@@ -13,7 +13,6 @@ import { CalendarService } from "../../services/calendar.service";
 export class SchedulePageComponent {
 
   constructor(
-    private query: QueryService,
     public state: StateService,
     public calendar: CalendarService) {
     this.getLessons();
@@ -45,5 +44,14 @@ export class SchedulePageComponent {
   //       }
   //     })
   // }
+
+  isCurrentDay({date}) {
+    if (date) {
+      const dateSchedule = formatDate(date, 'yyyy-MM-dd', 'en_US');
+      const dateNow = formatDate(Date.now(), 'yyyy-MM-dd', 'en_US');
+      return dateSchedule === dateNow;
+    }
+    return false;
+  }
 }
 

@@ -4,5 +4,5 @@
   <button (click)="setMonth('next')" class="sw-btn">Next</button>
 </div>
 <div>
-  {{calendar.viewDate.value.toLocaleDateString()}}
+  {{calendar.viewDate.value | date: 'MMMM yyyy'}}
 </div>

@@ -13,7 +13,6 @@ import {SpinnerService} from "./interceptors/spinner.service";
 import {NgbModalModule, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
 import {CommonModule} from "@angular/common";
 import { DayOfMonthComponent } from './components/day-of-month/day-of-month.component';
-import { TimeFormatterPipe } from './pipes/time-formatter.pipe';
 import { ViewSwitcherComponent } from './components/view-switcher/view-switcher.component';
 
 
@@ -35,7 +34,6 @@ import { ViewSwitcherComponent } from './components/view-switcher/view-switcher.
     StartPageComponent,
     SchedulePageComponent,
     DayOfMonthComponent,
-    TimeFormatterPipe,
     ViewSwitcherComponent,
   ],
 

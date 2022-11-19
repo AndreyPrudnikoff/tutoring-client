@@ -36,16 +36,32 @@ const formFields = [
   styleUrls: ['./start-page.component.scss']
 })
 export class StartPageComponent implements OnInit {
-
+log() {
+  for (const control in this.form.controls) {
+    console.log(this.form.controls?.[control]?.errors)
+  }
+}
   isLogin = true;
   formFields = formFields;
   mode = 'Registration';
   roles = ['tutor', 'student'];
-  form: FormGroup = this.fb.group({
-    email: ['', Validators.required],
-    password: ['', Validators.required],
+  loginForm = {
+    email: [null, [Validators.required, Validators.email]],
+    password: [null, [Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(20)]],
     user_role: this.roles[0]
-  })
+  }
+  regForm = {
+    first_name: [null, [Validators.required,
+      Validators.pattern(/^[а-яєіїьa-z]+([а-яєіїьa-z]|([а-яєіїьa-z][-' ]{1}[а-яєіїьa-z])){1,50}$/ui)]],
+    last_name: [null, Validators.required],
+    phone: [null, Validators.required],
+    email: [null, Validators.required],
+    user_role: this.roles[0],
+    reg_password: [null, Validators.required]
+  }
+  form: FormGroup = this.fb.group(this.loginForm)
 
   constructor(private fb: FormBuilder,
               private auth: AuthService,
@@ -78,21 +94,10 @@ export class StartPageComponent implements OnInit {
     this.isLogin = !this.isLogin;
     if (this.isLogin) {
       this.mode = 'Registration';
-      this.form = this.fb.group({
-        email: ['', Validators.required],
-        password: ['', Validators.required],
-        user_role: this.roles[0]
-      })
+      this.form = this.fb.group(this.loginForm)
     } else {
       this.mode = 'Login';
-      this.form = this.fb.group({
-        first_name: ['', Validators.required],
-        last_name: ['', Validators.required],
-        phone: ['', Validators.required],
-        email: ['', Validators.required],
-        user_role: this.roles[0],
-        reg_password: ['', Validators.required]
-      })
+      this.form = this.fb.group(this.regForm)
     }
   }
 

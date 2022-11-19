@@ -1,4 +1,4 @@
-<main>
+<main (click)="log()">
     <button class="switcher" (click)="changeTemplate()">{{mode}}</button>
     <form *ngIf="isLogin; else elseBlock" [formGroup]="form" (submit)="login()" class="form-field">
         <p>
