@@ -53,13 +53,14 @@ log() {
     user_role: this.roles[0]
   }
   regForm = {
-    first_name: [null, [Validators.required,
-      Validators.pattern(/^[а-яєіїьa-z]+([а-яєіїьa-z]|([а-яєіїьa-z][-' ]{1}[а-яєіїьa-z])){1,50}$/ui)]],
-    last_name: [null, Validators.required],
-    phone: [null, Validators.required],
-    email: [null, Validators.required],
+    first_name: [null, [Validators.required, Validators.pattern(/^[а-яєіїьa-z]+([а-яєіїьa-z]|([а-яєіїьa-z][-' ]{1}[а-яєіїьa-z])){1,50}$/ui)]],
+    last_name: [null, [Validators.required, Validators.pattern(/^[а-яєіїьa-z]+([а-яєіїьa-z]|([а-яєіїьa-z][-' ]{1}[а-яєіїьa-z])){1,50}$/ui)]],
+    phone: [null, [Validators.required]],
+    email: [null, [Validators.required, Validators.email]],
     user_role: this.roles[0],
-    reg_password: [null, Validators.required]
+    reg_password: [null, [Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(20)]]
   }
   form: FormGroup = this.fb.group(this.loginForm)
 
