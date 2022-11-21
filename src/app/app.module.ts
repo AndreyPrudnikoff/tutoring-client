@@ -20,6 +20,9 @@ import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {environment} from "../environments/environment";
 import {lessonsReducers} from "./store/reducers/lessons.reducer";
 import {LessonsEffects} from "./store/effects/lessons.effects";
+import { MonthComponent } from './pages/schedule-page/components/month/month.component';
+import { WeekComponent } from './pages/schedule-page/components/week/week.component';
+import { DayComponent } from './pages/schedule-page/components/day/day.component';
 
 
 @NgModule({
@@ -48,6 +51,9 @@ import {LessonsEffects} from "./store/effects/lessons.effects";
     SchedulePageComponent,
     DayOfMonthComponent,
     ViewSwitcherComponent,
+    MonthComponent,
+    WeekComponent,
+    DayComponent,
   ],
 
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

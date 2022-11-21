@@ -1,14 +1,3 @@
 <app-view-switcher></app-view-switcher>
-<div class="month">
-  <div class="day-of-week" *ngFor="let head of state.days">{{head}}</div>
-  <div class="day-of-month" [class.disabled]="!day.date" [class.current-day]="isCurrentDay(day)"
-       *ngFor="let day of state.lessonsRender">
-    <div class="day">{{day.date | date:'d'}}</div>
-    <div class="lessons-container">
-      <div *ngFor="let lesson of day.lesson">
-        <app-day-of-month [lesson]="lesson"></app-day-of-month>
-      </div>
-    </div>
-  </div>
-</div>
+<router-outlet></router-outlet>
 
