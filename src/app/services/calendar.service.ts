@@ -40,14 +40,12 @@ export class CalendarService {
 
   getLessons() {
     return this.query.getLessons({
-      data: {
         user_id: this.state.user.user_id,
         role: this.state.user_role,
         time_range: {
           more: `${this.currentYear}-${this.currentMonth + 1}-01`,
           less: `${this.currentYear}-${this.currentMonth + 1}-${this.currentMonthDays.length}`
         }
-      }, method: 'get'
     })
   }
 
@@ -86,5 +84,9 @@ export class CalendarService {
         return el
       }
     })
+  }
+
+  getCurrentDay() {
+    return this.state.lessonsRender.find(lesson => new Date(Date.now()).getDate() === new Date(lesson.date).getDate());
   }
 }

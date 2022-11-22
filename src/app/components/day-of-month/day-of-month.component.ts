@@ -9,12 +9,8 @@ import {Lesson} from "../../types/Lesson";
 export class DayOfMonthComponent implements OnInit {
   @Input() lesson: Lesson;
 
-
-
   constructor() {
   }
-
-
 
   ngOnInit(): void {
   }

@@ -1,4 +1,7 @@
-<div>
-  {{day.date}}
-  {{day.lesson | json}}
+<div *ngIf="day">
+  <div>
+    {{day.date | date: 'fullDate'}}
+
+  </div>
+  <div> {{day.lesson | json}}</div>
 </div>

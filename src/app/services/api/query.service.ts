@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {ApiService} from "./api.service";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import { LessonRequestBody } from "../../types/api";
+import {QueryLessons} from "../../types/api";
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +13,10 @@ export class QueryService extends ApiService{
     super();
   }
 
-  getLessons({method = 'get', data}: LessonRequestBody): Observable<any> {
-    return this.http.post(`${this.baseUrl}/lessons/`, {method, data})
+  getLessons(data: QueryLessons): Observable<any> {
+    return this.http.post(`${this.baseUrl}/lessons`, {method: 'get', data})
   }
-  createLesson({method = 'create', data}: LessonRequestBody): Observable<any> {
-    return this.http.post(`${this.baseUrl}/lessons`, {method, data})
+  createLesson(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/lessons`, {method: 'create', data})
   }
 }

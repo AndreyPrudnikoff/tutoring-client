@@ -13,7 +13,4 @@ export type QueryLessons = {
   }
   status?: string
 }
-export type LessonRequestBody = {
-  method: string
-  data: QueryLessons
-}
+
