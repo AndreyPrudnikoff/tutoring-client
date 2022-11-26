@@ -1,7 +1,14 @@
-<div *ngIf="day">
+<div class="day-wrapper" *ngIf="day">
   <div>
-    {{day.date | date: 'fullDate'}}
-
+<!--    <div class="hour-wrapper" *ngFor="let lesson of day.lesson">-->
+<!--      <div class="item">{{lesson.status}}</div>-->
+<!--      <div class="item">{{lesson.start_time | date: 'hh:mm'}}</div>-->
+<!--      <div class="item">{{lesson.end_time | date: 'hh:mm'}}</div>-->
+<!--      <div class="item">{{lesson.comment}}</div>-->
+<!--    </div>-->
+    <div class="hour" *ngFor="let hour of day.hours">
+      <div class="hour-name">{{ hour.hour | date: 'shortTime'}}</div>
+      <div class="hour-lesson"></div>
+    </div>
   </div>
-  <div> {{day.lesson | json}}</div>
 </div>

@@ -20,7 +20,6 @@ export class CalendarService {
   currentYear = this.viewDate.value.getFullYear();
   currentMonthDays = new Array(this.daysInMonth(this.currentMonth, this.currentYear)).fill(0);
 
-
   constructor(private state: StateService, private query: QueryService, private store: Store) {
     this.store.pipe(select(selectLessons))
       .subscribe(lessons => {
@@ -86,7 +85,26 @@ export class CalendarService {
     })
   }
 
-  getCurrentDay() {
-    return this.state.lessonsRender.find(lesson => new Date(Date.now()).getDate() === new Date(lesson.date).getDate());
+  getHours(day: any): Date[] {
+    const hours = []
+    for (let i = 0; i < 24; i++) {
+      const iteration: number = new Date(new Date(day.date).setHours(i)).setMinutes(0);
+      const hour = {hour: iteration, lessons: []};
+      day.lesson.forEach((lesson: Lesson) => {
+        if (new Date(lesson.start_time).getHours() >= new Date(iteration).getHours() && new Date(lesson.end_time).getHours() <= new Date(iteration).getHours() + 1) {
+          hour.lessons.push(lesson);
+        }
+      })
+      hours.push(hour)
+    }
+
+    return hours;
+  }
+
+
+  getCurrentDay(date = Date.now()) {
+    const day = this.state.lessonsRender.find(lesson => new Date(date).getDate() === new Date(lesson.date).getDate())
+    day.hours = this.getHours(day)
+    return day;
   }
 }

@@ -23,6 +23,7 @@ import {LessonsEffects} from "./store/effects/lessons.effects";
 import { MonthComponent } from './pages/schedule-page/components/month/month.component';
 import { WeekComponent } from './pages/schedule-page/components/week/week.component';
 import { DayComponent } from './pages/schedule-page/components/day/day.component';
+import { StatusColorPipe } from './pipes/status-color.pipe';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { DayComponent } from './pages/schedule-page/components/day/day.component
     MonthComponent,
     WeekComponent,
     DayComponent,
+    StatusColorPipe,
   ],
 
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

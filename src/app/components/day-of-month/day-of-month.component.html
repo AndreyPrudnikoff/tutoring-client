@@ -1,3 +1,6 @@
-<p class="round-lesson" triggers="hover" [autoClose]="true"
+<p class="round-lesson"
+   [style.background-color]="lesson.status_lesson | statusColor"
+   triggers="hover"
+   [autoClose]="true"
    ngbTooltip="{{lesson.start_time | date: 'hh:mm'}} - {{ lesson.end_time | date: 'hh:mm'}}  {{lesson.comment}}">
 </p>

@@ -1,0 +1,28 @@
+.day-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  .hour-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    .item {
+      padding: 5px 10px;
+    }
+  }
+  .hour {
+    text-align: right;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #CCCCCC;
+    .hour-name {
+      width: 80px;
+      border-right: 1px solid #CCCCCC;
+      border-left: 1px solid #CCCCCC;
+      padding: 3px 2px;
+    }
+    .hour-lesson {
+      padding: 3px 2px;
+    }
+  }
+}
