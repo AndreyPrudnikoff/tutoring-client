@@ -1,14 +1,21 @@
 <div class="day-wrapper" *ngIf="day">
   <div>
-<!--    <div class="hour-wrapper" *ngFor="let lesson of day.lesson">-->
-<!--      <div class="item">{{lesson.status}}</div>-->
-<!--      <div class="item">{{lesson.start_time | date: 'hh:mm'}}</div>-->
-<!--      <div class="item">{{lesson.end_time | date: 'hh:mm'}}</div>-->
-<!--      <div class="item">{{lesson.comment}}</div>-->
-<!--    </div>-->
+    <!--    <div class="hour-wrapper" *ngFor="let lesson of day.lesson">-->
+    <!--      <div class="item">{{lesson.status}}</div>-->
+    <!--      <div class="item">{{lesson.start_time | date: 'hh:mm'}}</div>-->
+    <!--      <div class="item">{{lesson.end_time | date: 'hh:mm'}}</div>-->
+    <!--      <div class="item">{{lesson.comment}}</div>-->
+    <!--    </div>-->
     <div class="hour" *ngFor="let hour of day.hours">
       <div class="hour-name">{{ hour.hour | date: 'shortTime'}}</div>
-      <div class="hour-lesson"></div>
+      <div class="hour-lesson">
+        <div class="lesson-in-hour"
+          *ngFor="let lesson of hour.lessons"
+             [style.background-color]="lesson.status_lesson | statusColor"
+             [class.hide]="!computeBackground(lesson, hour.hour)"
+             [style.height]="computeBackground(lesson, hour.hour) + '%'"
+        >{{lesson.start_time | date: 'hh-mm'}}  {{lesson.end_time | date: 'hh-mm'}}</div>
+      </div>
     </div>
   </div>
 </div>

@@ -17,14 +17,9 @@ export class ViewSwitcherComponent implements OnInit {
   }
 
   setMonth(value: SwitchNavigation) {
-    const time = {
-      year: new Date(Date.now()).getFullYear(),
-      month: new Date(Date.now()).getMonth(),
-      date: new Date(Date.now()).getDate()
-    }
     switch (value) {
       case "current":
-        this.calendar.viewDate.next(new Date(time.year, time.month, time.date));
+        this.calendar.viewDate.next(new Date(this.calendar.getClearDateNow()));
         break;
       case "next":
         this.calendar.viewDate
@@ -47,7 +42,7 @@ export class ViewSwitcherComponent implements OnInit {
               this.calendar.viewDate.value.getDate())));
         break;
       default:
-        this.calendar.viewDate.next(new Date(Date.now()));
+        this.calendar.viewDate.next(new Date(this.calendar.getClearDateNow()));
         break;
     }
   }

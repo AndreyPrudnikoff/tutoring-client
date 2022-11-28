@@ -10,19 +10,33 @@
       padding: 5px 10px;
     }
   }
+
   .hour {
     text-align: right;
     display: flex;
     flex-direction: row;
     border: 1px solid #CCCCCC;
+
     .hour-name {
       width: 80px;
       border-right: 1px solid #CCCCCC;
       border-left: 1px solid #CCCCCC;
       padding: 3px 2px;
     }
+
     .hour-lesson {
-      padding: 3px 2px;
+      position: relative;
+      width: 100%;
+      text-align: left;
+
+      .hide {
+        display: none;
+      }
+
+      .lesson-in-hour {
+        width: 100%;
+        padding: 3px 2px;
+      }
     }
   }
 }

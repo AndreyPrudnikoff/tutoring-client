@@ -8,4 +8,13 @@ export type Lesson = {
   tutor_id: string
   comment: string
 }
+export type Hour = {
+  hour: number
+  lessons: Lesson[]
+}
+export type RenderLesson = {
+  date: number
+  hours: Hour[]
+  lesson: Lesson[]
+}
 export type StatusLesson = 'expected' | 'completed' | 'abandoned' | 'canceled'

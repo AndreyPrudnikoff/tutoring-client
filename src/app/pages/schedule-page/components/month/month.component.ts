@@ -36,7 +36,8 @@ export class MonthComponent implements OnInit {
   }
   async toDay(day) {
     if (day.date) {
-     await this.router.navigate(['schedule/day'], {state: this.calendar.getCurrentDay(day.date)})
+     await this.router.navigate(['schedule/day'],
+       {state: this.calendar.getCurrentDay(day.date)})
     }
   }
   ngOnInit(): void {

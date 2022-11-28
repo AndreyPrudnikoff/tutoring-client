@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Lesson} from "../types/Lesson";
+import {Hour, Lesson} from "../types/Lesson";
 import {BehaviorSubject} from "rxjs";
 import {StateService} from "./state.service";
 import {QueryService} from "./api/query.service";
@@ -14,7 +14,7 @@ export class CalendarService {
 
   options: any = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
   locale = window.navigator.language;
-  viewDate = new BehaviorSubject(new Date(Date.now()));
+  viewDate = new BehaviorSubject(new Date(this.getClearDateNow()));
   currentDate = new Date(Date.now()).getDate();
   currentMonth = this.viewDate.value.getMonth();
   currentYear = this.viewDate.value.getFullYear();
@@ -39,12 +39,12 @@ export class CalendarService {
 
   getLessons() {
     return this.query.getLessons({
-        user_id: this.state.user.user_id,
-        role: this.state.user_role,
-        time_range: {
-          more: `${this.currentYear}-${this.currentMonth + 1}-01`,
-          less: `${this.currentYear}-${this.currentMonth + 1}-${this.currentMonthDays.length}`
-        }
+      user_id: this.state.user.user_id,
+      role: this.state.user_role,
+      time_range: {
+        more: `${this.currentYear}-${this.currentMonth + 1}-01`,
+        less: `${this.currentYear}-${this.currentMonth + 1}-${this.currentMonthDays.length}`
+      }
     })
   }
 
@@ -85,13 +85,17 @@ export class CalendarService {
     })
   }
 
-  getHours(day: any): Date[] {
+  getHours(day: any): Hour[] {
     const hours = []
     for (let i = 0; i < 24; i++) {
-      const iteration: number = new Date(new Date(day.date).setHours(i)).setMinutes(0);
-      const hour = {hour: iteration, lessons: []};
+      const startHour: number = new Date(new Date(day.date).setHours(i)).setMinutes(0);
+      const endHour: number = new Date(startHour).setHours(i + 1);
+      const hour = {hour: startHour, lessons: []};
       day.lesson.forEach((lesson: Lesson) => {
-        if (new Date(lesson.start_time).getHours() >= new Date(iteration).getHours() && new Date(lesson.end_time).getHours() <= new Date(iteration).getHours() + 1) {
+        if (new Date(lesson.start_time).getTime() >= new Date(startHour).getTime()
+          && new Date(lesson.start_time).getTime() <= new Date(endHour).getTime()
+          || new Date(lesson.end_time).getTime() >= new Date(startHour).getTime()
+          && new Date(lesson.end_time).getTime() <= new Date(endHour).getTime()) {
           hour.lessons.push(lesson);
         }
       })
@@ -101,8 +105,11 @@ export class CalendarService {
     return hours;
   }
 
+  getClearDateNow() {
+    return new Date(new Date(new Date(Date.now()).setHours(0)).setMinutes(0)).setMilliseconds(0)
+  }
 
-  getCurrentDay(date = Date.now()) {
+  getCurrentDay(date = this.getClearDateNow()) {
     const day = this.state.lessonsRender.find(lesson => new Date(date).getDate() === new Date(lesson.date).getDate())
     day.hours = this.getHours(day)
     return day;

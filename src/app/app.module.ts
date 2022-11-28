@@ -24,6 +24,8 @@ import { MonthComponent } from './pages/schedule-page/components/month/month.com
 import { WeekComponent } from './pages/schedule-page/components/week/week.component';
 import { DayComponent } from './pages/schedule-page/components/day/day.component';
 import { StatusColorPipe } from './pipes/status-color.pipe';
+import { ModalErrorComponent } from './components/modal-error/modal-error.component';
+import {ErrorService} from "./interceptors/error.service";
 
 
 @NgModule({
@@ -56,6 +58,7 @@ import { StatusColorPipe } from './pipes/status-color.pipe';
     WeekComponent,
     DayComponent,
     StatusColorPipe,
+    ModalErrorComponent,
   ],
 
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -68,6 +71,11 @@ import { StatusColorPipe } from './pipes/status-color.pipe';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpinnerService,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorService,
       multi: true
     }
   ],
