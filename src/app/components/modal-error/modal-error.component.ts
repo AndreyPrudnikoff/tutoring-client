@@ -6,7 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./modal-error.component.scss']
 })
 export class ModalErrorComponent implements OnInit {
-  @Input() error: Error;
+  @Input() error: Error & {status: number};
 
   constructor() {
   }

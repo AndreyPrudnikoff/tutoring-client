@@ -28,18 +28,17 @@ export class ViewSwitcherComponent implements OnInit {
               ? this.calendar.viewDate.value.getFullYear()
             : this.calendar.viewDate.value.getFullYear() + 1,
             this.calendar.viewDate.value.getMonth() < 11 ? this.calendar.viewDate.value.getMonth() + 1 : 0,
-            this.calendar.viewDate.value.getDate())
+            1)
           );
         break;
       case "prev":
         this.calendar.viewDate
-          .next(
-            new Date(new Date(
-              this.calendar.viewDate.value.getMonth() === 0
-                ? this.calendar.viewDate.value.getFullYear() - 1
-                : this.calendar.viewDate.value.getFullYear(),
-              this.calendar.viewDate.value.getMonth() > 0 ? this.calendar.viewDate.value.getMonth() - 1 : 11,
-              this.calendar.viewDate.value.getDate())));
+          .next(new Date(new Date(
+            this.calendar.viewDate.value.getMonth() === 0
+              ? this.calendar.viewDate.value.getFullYear() - 1
+              : this.calendar.viewDate.value.getFullYear(),
+            this.calendar.viewDate.value.getMonth() > 0 ? this.calendar.viewDate.value.getMonth() - 1 : 11,
+            1)));
         break;
       default:
         this.calendar.viewDate.next(new Date(this.calendar.getClearDateNow()));

@@ -14,8 +14,9 @@ export class ErrorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // @ts-ignore
     return next.handle(req).pipe(catchError((err: HttpErrorResponse) => {
-        this.behavior.openModal(err.error, 3000);
-        return err;
-      }));
+      console.log(err)
+      this.behavior.openModal({...err.error, status: err.status}, 3000);
+      return err;
+    }));
   }
 }

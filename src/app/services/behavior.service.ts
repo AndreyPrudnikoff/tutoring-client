@@ -10,7 +10,7 @@ export class BehaviorService {
   constructor(private modalWindow: NgbModal) {
   }
 
-  openModal(error: Error, timeout = 0) {
+  openModal(error: Error & {status: number}, timeout = 0) {
     const modalRef = this.modalWindow.open(
       ModalErrorComponent,
       {
