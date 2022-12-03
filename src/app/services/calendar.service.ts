@@ -88,14 +88,15 @@ export class CalendarService {
   getHours(day: any): Hour[] {
     const hours = []
     for (let i = 0; i < 24; i++) {
-      const startHour: number = new Date(new Date(day.date).setHours(i)).setMinutes(0);
-      const endHour: number = new Date(startHour).setHours(i + 1);
+      const startHour = new Date(new Date(day.date).setHours(i)).setMinutes(0);
+      const endHour = new Date(new Date(startHour).setHours(i + 1)).setMinutes(0);
       const hour = {hour: startHour, lessons: []};
       day.lesson.forEach((lesson: Lesson) => {
-        if (new Date(lesson.start_time).getTime() >= new Date(startHour).getTime()
-          && new Date(lesson.start_time).getTime() <= new Date(endHour).getTime()
-          || new Date(lesson.end_time).getTime() >= new Date(startHour).getTime()
-          && new Date(lesson.end_time).getTime() <= new Date(endHour).getTime()) {
+        const start = new Date(lesson.start_time).getTime();
+        const end = new Date(lesson.end_time).getTime();
+        if ((start >= startHour && start < endHour)
+          || (end > startHour && end <= endHour)
+          || (start < startHour && end > endHour)) {
           hour.lessons.push(lesson);
         }
       })

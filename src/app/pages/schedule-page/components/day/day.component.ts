@@ -25,7 +25,6 @@ export class DayComponent {
         .subscribe(lessons => {
           if (lessons) {
             this.day = this.calendar.getCurrentDay();
-            console.log(this.day)
           }
         })
     }
@@ -37,7 +36,7 @@ export class DayComponent {
     const dif = end - start;
     const startHour = hour;
     const endHour = new Date(startHour).setHours(new Date(startHour).getHours() + 1);
-    if (startHour <= start && endHour >= start && endHour <= end || startHour >= start && endHour <= end && startHour <= end) {
+    if (start >= startHour && start <= endHour || end >= startHour && end <= endHour || start < startHour && end > endHour) {
       return dif / 3600000 * 100;
     }
     return 0;
